@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+servers=~/bin/servers
+
+source ~/bin/selector.bash
+function ejecutar() {
+    N=`echo $1 | sed s/[^0-9]//g`
+    F=
+    if [[ "$1" =~ [0-9]f ]]
+    then
+        F="-f"
+    fi
+
+    `cat $servers | cut -f1 -d'#' | head -$N | tail -1` $F
+}
+
+main

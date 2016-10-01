@@ -1,0 +1,14 @@
+#!/bin/bash
+
+eclimenv=~/.eclimrc
+
+pidfile=/tmp/services.pid 
+if [ -f $pidfile ]; then
+    envfile=/tmp/services.`cat $pidfile`.tmp
+    if [ -f $envfile ]; then
+        envtype=`cat $envfile`
+        eclimenv=${eclimenv}.$envtype
+    fi
+fi
+
+/Applications/Eclipse.app/Contents/Eclipse/eclimd --file $eclimenv

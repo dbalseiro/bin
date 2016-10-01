@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+gs | awk '/^UU/ { print $2 }' | xargs vim
+

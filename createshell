@@ -1,0 +1,7 @@
+cat << EOF > $1
+#!/bin/zsh
+set -e
+
+EOF
+chmod +x $1
+vim $1 +

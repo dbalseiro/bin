@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+
+function main() {
+    #por lo menos un parametro
+    if [ "$1" == "" ]; then
+        uso
+    fi
+
+    #que exista el árchivo
+    if [ ! -f "$1" ]; then
+        echo "file not found: $1"
+        uso
+    fi
+
+    #saco los datos de conexion de la primera linea del archivo
+    #(menos los prmeros tres caracteres del -- del comentario)
+    CONN=$(head -1 "$1" | cut -c4-)
+
+    #ejecuto postgres con los datos de conexion y el archivo
+    echo "using $CONN"
+    psql $CONN -f "$1"
+}
+
+function uso() {
+    echo 'USO: pgexe <file>'
+    exit 1
+}
+
+############
+main

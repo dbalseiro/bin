@@ -1,0 +1,6 @@
+ps -ef | 
+grep eclipse | 
+grep -v grep | 
+grep -v killeclimd | 
+awk '{ print $2 }' | 
+xargs kill

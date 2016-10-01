@@ -1,0 +1,7 @@
+amz#postgres@amazon-io
+amz2#postgres@inscripcion.dev.syntagma.com.ar
+amz3#postgres@ec2-54-146-62-102.compute-1.amazonaws.com
+amz4#postgres@ec2-23-20-67-97.compute-1.amazonaws.com
+111#postgres@syntagma-io
+azure#postgres@gcaba-io.cmdb03agwzjb.us-east-1.rds.amazonaws.com
+gcaba-io#inscripcion_user@localhost

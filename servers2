@@ -1,0 +1,11 @@
+amz#-i /Users/diego/.ssh/syntagma.pem ubuntu@inscripcion.syntagma.com.ar
+amz2#-i /Users/diego/.ssh/syntagma.pem ubuntu@54.167.189.93
+amz3#-i /Users/diego/.ssh/syntagma.pem ubuntu@ec2-54-146-62-102.compute-1.amazonaws.com
+amz4#-i /Users/diego/.ssh/syntagma.pem ubuntu@ec2-23-20-67-97.compute-1.amazonaws.com
+111#syntagma@syntagma-io
+azure#syntagma@gcaba-io.cloudapp.net
+gcaba-io#localhost:2222
+adeccoWP#root@10.66.200.43:31337:LX106620043LX
+jbossgcaba#iodesa@10.10.4.191
+apachegcaba#iodesa@10.10.4.175
+rhelgcaba#iodesa@10.9.9.118

@@ -1,0 +1,101 @@
+#!/bin/bash
+set -e
+
+CMD=
+
+function usage() {
+	echo 'USAGE: ie <file-name> [line-number]'
+	exit
+}
+
+if [ "$1" == "" -o "$1" == "-h" -o "$1" == "--help" ]; then
+	usage
+fi
+
+LINE=
+if [ "$2" != "" ]; then
+	if ! [[ $2 =~ ^([0-9]*) ]]; then
+		echo ERROR line-number must be a number
+		usage
+	fi
+
+	LINE="+$2"
+fi
+
+FOUND=/tmp/$(basename $0).tmp
+
+function cantidad-filas() {
+	wc -l $FOUND | awk '{ print $1 }'
+}
+
+find . -name $1 > $FOUND
+if [ $(cantidad-filas) -eq 0 ]; then
+	echo file not found
+	exit
+fi
+
+RESULT=
+function main() {
+	select-file
+	if [ "$RESULT" != "" ]; then
+		$CMD $EDITOR $RESULT $LINE
+	fi
+}
+
+function select-file() {
+	if [ $(cantidad-filas) -eq 1 ]; then
+		select-first-file
+	else
+		prompt-files
+	fi
+}
+
+function prompt-files() {
+	numerar $FOUND
+	set +e
+	nth=0
+	while [ $nth -eq 0 ]; do
+		prompt-file-number
+		nth=$?
+	done
+	set -e
+	select-nth-file $nth
+}
+
+function numerar() {
+	i=0
+	cat $1 | while read f; do
+		let i+=1
+		echo "$i: $f"
+	done
+}
+
+function prompt-file-number() {
+	echo -n '?'
+	read R
+	
+	if [ "$R" == "" ]; then
+		return 0
+	fi
+
+	re='^[0-9]+$'
+	if ! [[ $R =~ $re ]]; then
+		return 0
+	fi
+
+	if [ $R -gt $(cantidad-filas) -o $R -le 0 ]; then
+		return 0
+	fi
+
+	return $R
+}
+
+function select-first-file() {
+	select-nth-file 1
+}
+
+function select-nth-file() {
+	RESULT=$(cat $FOUND | head -$1 | tail -1)
+}
+
+main 

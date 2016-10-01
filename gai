@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+git add -i << EOC
+u
+$1
+
+q
+EOC

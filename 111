@@ -1,0 +1,9 @@
+#!/bin/zsh
+set -e
+CMD=ssh
+
+if [ "$1" = "-f" ]; then
+    CMD=sftp
+fi
+
+$CMD $(cat ~/bin/servers | grep "^$(basename $0)" | cut -d# -f2)

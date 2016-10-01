@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+servers=~/bin/pgservers
+
+source ~/bin/selector.bash
+
+function pedirdb() {
+    listabases=/tmp/listabases.$$.tmp
+    psql $connstr --list --tuples-only |
+        awk '$3 == "inscripcion_user" { print $1 }' > $listabases
+
+    mostrarlistado $listabases
+    while elegir $listabases abrirdb; do
+        echo "error"
+    done
+}
+
+function abrirdb() {
+    database=`cat $listabases | head -$1 | tail -1`
+}
+
+function ejecutar() {
+    local buffer="/tmp/$(basename $0).$$.sql"
+    database=
+    connstr=`cat $servers | cut -f2 -d"#" | head -$1 | tail -1 | 
+        awk -F"@" '{ printf("-h %s -U %s", $2, $1) }'`
+    pedirdb
+    
+    echo "-- $connstr -d $database" > $buffer
+    echo >> $buffer
+    (cd ~/git/gcaba-io/database/update-scripts/01.08.00 ; vim $buffer +)
+}
+
+main

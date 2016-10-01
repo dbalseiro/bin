@@ -1,0 +1,14 @@
+#!/bin/zsh
+set -e
+HOST="root@10.66.200.43"
+PORT="31337"
+PASSWORD=LX106620043LX
+echo $SERVER
+if [ "$1" = "-f" ]; then
+	CMD="sftp -P $PORT $HOST"
+else
+    CMD="ssh $HOST -p $PORT"
+fi
+echo $PASSWORD
+$CMD
+

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+echo $$ > /tmp/services.pid
+
+function readopt() {
+    while true; do
+        clear
+        echo "1) gcaba"
+        echo "2) mb"
+        echo "3) circulo"
+        echo -n "? "
+
+        read opt
+
+        case $opt in
+        1)
+            echo gcaba > /tmp/services.$$.tmp
+            break
+            ;;
+        2)
+            echo mb > /tmp/services.$$.tmp
+            break
+            ;;
+        3)
+            echo circulo > /tmp/services.$$.tmp
+            break
+            ;;
+        "")
+            exit
+            ;;
+        esac
+    done
+}
+
+function startserices() {
+    startjboss &
+    starteclimd &
+    echo $! > /tmp/eclim.pid
+}
+
+readopt
+startserices

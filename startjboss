@@ -1,0 +1,27 @@
+#!/bin/bash
+
+export RUN_CONF=
+export JBOSS_HOME=
+if [ "$1" == "d" ]; then
+    export RUN_CONF=$jboss_home/bin/standalone-dbg.conf
+fi
+
+config=standalone.xml
+pidfile=/tmp/services.pid 
+if [ -f $pidfile ]; then
+    envfile=/tmp/services.$(cat $pidfile).tmp
+    if [ -f $envfile ]; then
+        envtype=`cat $envfile`
+        case $envtype in
+            "gcaba") config=standalone-io.xml ;;
+            "mb") config=standalone-pad.xml ;;
+        esac
+    fi
+fi
+#echo ./standalone.sh --server-config=$config -b 0.0.0.0 $DEBUG_OPT 
+if [ "$envtype" == "circulo" ]; then
+    jbhome="$HOME/wildfly-9.0.2.Final/bin"
+else
+    jbhome="$HOME/jboss-as-7.1.1.Final/bin"
+fi
+(cd $jbhome; ./standalone.sh --server-config=$config -b 0.0.0.0 $DEBUG_OPT | log-colorizer)

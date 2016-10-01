@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+HOST=localhost
+PORT=2222
+if [ "$1" == "-f" ]; then
+	CMD="sftp -P $PORT $HOST"
+else
+    CMD="ssh $HOST -p $PORT"
+fi
+$CMD
+

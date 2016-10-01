@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+
+cat ~/bin/servers | while read server; do
+	FILENAME=~/bin/$(echo $server | cut -d# -f1)
+
+	if [ "$1" == "-f" ]; then
+		if [ -f $FILENAME ]; then
+			rm $FILENAME
+		fi
+	fi
+
+	if ! [ -f $FILENAME ]; then
+		cat << EOF > $FILENAME
+#!/bin/bash
+set -e
+IFS=: read SERVER <<< \$(cat ~/bin/servers | grep "^\$(basename \$0)" | cut -d# -f2)
+HOST=\${SERVER[0]}
+PORT=\${SERVER[1]}
+PASSWORD=\${SERVER[2]}
+if [ "\$1" == "-f" ]; then
+	CMD=sftp \$HOST -P \$PORT
+else
+    CMD=ssh \$HOST -p \$PORT
+fi
+echo \$PASSWORD
+\$CMD
+
+EOF
+		chmod +x $FILENAME
+	fi
+done
+		
