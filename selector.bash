@@ -30,6 +30,7 @@ function elegir() {
     echo -n "[1-$(maximo $1)]? "
     read r
     if [ "$r" == "" ]; then
+        clear
         exit
     fi
     if ! [[ "$r" =~ [1-9].* ]]; then
