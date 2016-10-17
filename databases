@@ -7,7 +7,7 @@ source ~/bin/selector.bash
 function pedirdb() {
     listabases=/tmp/listabases.$$.tmp
     psql $connstr --list --tuples-only |
-        awk '$3 == "inscripcion_user" { print $1 }' > $listabases
+        awk '$3 == "inscripcion_user" || $3 == "postgres" { print $1 }' > $listabases
 
     mostrarlistado $listabases
     while elegir $listabases abrirdb; do
