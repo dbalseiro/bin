@@ -1,6 +1,6 @@
 amz#-i /Users/diego/.ssh/syntagma.pem ubuntu@inscripcion.syntagma.com.ar
 amz2#-i /Users/diego/.ssh/syntagma.pem ubuntu@inscripcion.dev.syntagma.com.ar
-amz3#-i /Users/diego/.ssh/syntagma.pem ubuntu@ec2-54-146-62-102.compute-1.amazonaws.com
+amz3#-i /Users/diego/.ssh/syntagma.pem ubuntu@ec2-54-146-2-44.compute-1.amazonaws.com
 amz4#-i /Users/diego/.ssh/syntagma.pem ubuntu@ec2-23-20-67-97.compute-1.amazonaws.com
 111#syntagma@syntagma-io
 azure#syntagma@gcaba-io.cloudapp.net
