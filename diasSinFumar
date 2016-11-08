@@ -1,0 +1,58 @@
+#!/bin/bash
+
+set -e
+
+FILE_SINFUMAR=~/.sinfumar
+ORIGEN_SINFUMAR="24/10/2016"
+
+function main() {
+    if displaySinFumar; then
+        mensajeSinFumar
+    fi
+}
+
+function displaySinFumar() {
+    if [ -f $FILE_SINFUMAR ]; then
+        test `diasSinMensaje` -ge 1
+    else
+        true
+    fi
+}
+
+function diasSinMensaje() {
+    diasEntre `creacionArchivoSinFumar` `timestampHoy`
+}
+
+function creacionArchivoSinFumar() {
+    stat -f %c $FILE_SINFUMAR
+}
+
+function timestampHoy() {
+    date +%s
+}
+
+function diasEntre() {
+    echo $(( (((($2 - $1 ) / 60 ) / 60) / 24) ))
+}
+
+function mensajeSinFumar() {
+    echo "DIAS SIN FUMAR --> $(cantDiasSinFumar)"
+    marcarMensajeSinFumar
+}
+
+function cantDiasSinFumar() {
+    diasEntre `timestampSinFumarOrigen` `timestampHoy`
+}
+
+function timestampSinFumarOrigen() {
+    date -j -f "%d/%m/%Y" "$ORIGEN_SINFUMAR" +%s
+}
+
+function marcarMensajeSinFumar() {
+    if [ -f $FILE_SINFUMAR ]; then
+        rm $FILE_SINFUMAR
+    fi
+    touch $FILE_SINFUMAR
+}
+
+main
