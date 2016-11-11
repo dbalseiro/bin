@@ -6,17 +6,13 @@ FILE_SINFUMAR=~/.sinfumar
 ORIGEN_SINFUMAR="24/10/2016"
 
 function main() {
-    if displaySinFumar; then
-        mensajeSinFumar
-    fi
+    displaySinFumar && 
+    mensajeSinFumar
 }
 
 function displaySinFumar() {
-    if [ -f $FILE_SINFUMAR ]; then
-        test `diasSinMensaje` -ge 1
-    else
-        true
-    fi
+    test ! -f $FILE_SINFUMAR ||
+    test `diasSinMensaje` -ge 1
 }
 
 function diasSinMensaje() {
@@ -37,7 +33,14 @@ function diasEntre() {
 
 function mensajeSinFumar() {
     echo "DIAS SIN FUMAR --> $(cantDiasSinFumar)"
+    pausarDisplay
     marcarMensajeSinFumar
+}
+
+function pausarDisplay() {
+    echo -n "Enter para continuar . . ."
+    read -s n
+    echo
 }
 
 function cantDiasSinFumar() {
@@ -49,9 +52,9 @@ function timestampSinFumarOrigen() {
 }
 
 function marcarMensajeSinFumar() {
-    if [ -f $FILE_SINFUMAR ]; then
-        rm $FILE_SINFUMAR
-    fi
+    test -f $FILE_SINFUMAR && 
+    rm $FILE_SINFUMAR
+    
     touch $FILE_SINFUMAR
 }
 
