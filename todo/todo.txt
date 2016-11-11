@@ -1,3 +1,0 @@
-+weechat agregar skype
-encriptar passwords del +weechat
-seguir configurando +weechat
