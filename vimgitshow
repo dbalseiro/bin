@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+git show "$1" | vim - "+set filetype=${1##*.}" +$2
